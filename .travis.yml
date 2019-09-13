@@ -4,4 +4,9 @@ jobs:
         include:
                 - name: test
                   stage: test
-                  script: sudo iptables -I INPUT -p tcp --dport 8080 -j DROP
+                  script: 
+                        - sudo iptables -I INPUT -p tcp --dport 8000 -j DROP
+                        - python2.7 -m SimpleHTTPServer
+                        - wget 0.0.0.0:8000 --timeout=1 --tries=1 || echo "Yep, request fails"
+                        - sudo iptables -D INPUT -p tcp --dport 8000 -j DROP
+                        - wget 0.0.0.0:8000 --timeout=1 --tries=1 && echo "Yep, request success"
