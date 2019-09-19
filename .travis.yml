@@ -8,6 +8,6 @@ jobs:
                           #                        - sudo iptables -I INPUT -p tcp --dport 8000 -j DROP
                         - python2.7 -m SimpleHTTPServer &
                         - wget 0.0.0.0:8000 --timeout=1 --tries=1 || echo "Yep, request fails"
-                        - sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 9000 -j REDIRECT --to-port 8000 
+                        - sudo iptables -t nat -A PREROUTING -p tcp --dport 9000 -j REDIRECT --to-port 8000 
                           #- sudo iptables -D INPUT -p tcp --dport 8000 -j DROP
                         - wget 0.0.0.0:9000 --timeout=1 --tries=1 && echo "Yep, request success"
